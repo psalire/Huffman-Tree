@@ -22,7 +22,6 @@ void swapEnd(Heap *);
 void push(Heap *, Elem *); // Insert Elem of val uint32_t and heapify/sort
 Elem *pop(Heap *);
 void swapParent(Heap *, Elem *);
-void isHeap(Heap *, Elem *, uint8_t *);
 void freeHeap(Heap *);
 void printElem(Elem *);
 void printHeap(Heap *);

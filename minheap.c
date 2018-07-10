@@ -35,7 +35,6 @@ Elem *getElemByIndex(Heap *h, uint32_t index) {
 	if (!h || index >= h->size) {
 		return NULL;
 	}
-	// printf("getting index %u\n", index);
 	Elem *temp = h->parent;
 	if (temp && temp->index != index) {
 		for (; temp && temp->index < h->size && temp->index != index; temp = temp->next);
@@ -119,16 +118,13 @@ void swapParent(Heap *h, Elem *n) {
 		}
 	}
 }
-// void push(Heap *h, uint32_t val, uint8_t sym) {
 void push(Heap *h, Elem *n) {
 	if (h) {
-		// Elem *n = newElem(val, h->size, sym);
 		n->index = h->size;
 		if (h->size++) {
 			h->end->next = n;
 			h->end = n;
 			Elem *p = getParent(h, n);
-			// while (p && n && p->val < n->val) {
 			while (p && n && p->val > n->val) {
 				uint32_t pIndex = p->index;
 				swapParent(h, n);
@@ -149,10 +145,6 @@ Elem *pop(Heap *h) {
 	}
 	if (h->size == 1) {
 		Elem *retVal = h->parent;
-		// Elem *retVal = newElem(h->parent->val, h->parent->index, h->parent->symbol);
-		// retVal->left = h->parent->left;
-		// retVal->right = h->parent->right;
-		// free(h->parent);
 		h->parent = NULL;
 		h->end = NULL;
 		h->size--;
@@ -160,14 +152,10 @@ Elem *pop(Heap *h) {
 	}
 	else if (h->size) {
 		Elem *retVal = h->parent;
-		// Elem *retVal = newElem(h->parent->val, 0, h->parent->symbol);
-		// retVal->left = h->parent->left;
-		// retVal->right = h->parent->right;
 		swapEnd(h);
 		Elem *t = getElemByIndex(h, h->end->index - 1);
 		h->end = t;
 		if (t) {
-			// free(t->next);
 			t->next = NULL;
 		}
 		Elem *p = h->parent;
@@ -175,7 +163,6 @@ Elem *pop(Heap *h) {
 		Elem *r = getRightChild(h, p);
 		h->size--;
 		uint32_t lIndex, rIndex;
-		// while (p && ((l && p->val < l->val) || (r && p->val < r->val))) {
 		while (p && ((l && p->val > l->val) || (r && p->val > r->val))) {
 			if (l) {
 				lIndex = l->index;
@@ -183,9 +170,7 @@ Elem *pop(Heap *h) {
 			if (r) {
 				rIndex = r->index;
 			}
-			// if (l && r && p->val < l->val && p->val < r->val) {
 			if (l && r && p->val > l->val && p->val > r->val) {
-				// if (l->val > r->val) {
 				if (l->val < r->val) {
 					swapParent(h, l);
 					p = getElemByIndex(h, lIndex);
@@ -195,12 +180,10 @@ Elem *pop(Heap *h) {
 					p = getElemByIndex(h, rIndex);
 				}
 			}
-			// else if (l && p->val < l->val) {
 			else if (l && p->val > l->val) {
 				swapParent(h, l);
 				p = getElemByIndex(h, lIndex);
 			}
-			// else if (r && p->val < r->val) {
 			else if (r && p->val > r->val) {
 				swapParent(h, r);
 				p = getElemByIndex(h, rIndex);
@@ -214,22 +197,6 @@ Elem *pop(Heap *h) {
 	}
 	else {
 		return NULL;
-	}
-}
-void isHeap(Heap *h, Elem *n, uint8_t *is) {
-	if (h && n) {
-		*is = 1;
-		Elem *p = getParent(h, n);
-		if (p && p->val > n->val) {
-			*is = 0;
-		}
-		if (*is) {
-			isHeap(h, getLeftChild(h, n), is);
-			isHeap(h, getRightChild(h, n), is);
-		}
-	}
-	else if (!h) {
-		*is = 0;
 	}
 }
 void printElem(Elem *e) {

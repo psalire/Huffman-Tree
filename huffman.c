@@ -8,7 +8,7 @@
 void bVInit(Bitvector *b) {
 	b->len = 0;
 	b->curr = 0;
-	memset(b->bV, 0, 256 * sizeof(uint8_t));
+	memset(b->bV, 0, 256);
 }
 void pushBit(void *x, void *y) {
 	Bitvector *b = (Bitvector *) x;
@@ -162,22 +162,22 @@ void printTreeToFile(FILE *fd, Node *n, uint32_t *fileSize) {
 		printTreeToFile(fd, n->right, fileSize);
 		uint8_t leaf = 'L', internal = 'I';
 		if (!(n->left || n->right)) {
-			if (!fwrite(&leaf, sizeof(uint8_t), 1, fd)) {
+			if (!fwrite(&leaf, 1, 1, fd)) {
 				puts("printTreeToFile fwrite() fail");
 				exit(-1);
 			}
-			if (!fwrite(&n->symbol, sizeof(uint8_t), 1, fd)) {
+			if (!fwrite(&n->symbol, 1, 1, fd)) {
 				puts("printTreeToFile fwrite() fail");
 				exit(-1);
 			}
-			*fileSize += sizeof(uint8_t) << 1;
+			*fileSize += 2;
 		}
 		else {
-			if (!fwrite(&internal, sizeof(uint8_t), 1, fd)) {
+			if (!fwrite(&internal, 1, 1, fd)) {
 				puts("printTreeToFile fwrite() fail");
 				exit(-1);
 			}
-			*fileSize += sizeof(uint8_t);
+			*fileSize += 1;
 		}
 	}
 }
