@@ -7,25 +7,6 @@
 #include "binaryTree.h"
 #include "huffman.h"
 
-static void printHistogram(uint32_t *freq) {
-	for (int i = 0; i < 256; i++) {
-		if (freq[i]) {
-			if (i == 10) {
-				printf("NL : %u\n", freq[i]);
-			}
-			else if (i == 13) {
-				printf("CR : %u\n", freq[i]);
-			}
-			else if (i == 32) {
-				printf("Space : %u\n", freq[i]);
-			}
-			else {
-				printf("%c : %u\n", i, freq[i]);
-			}
-		}
-	}
-}
-
 int main(int argc, char **argv) {
 	/**********************Open Files**********************/
 	int c;
@@ -82,7 +63,22 @@ int main(int argc, char **argv) {
 		freq[buf]++;
 	}
 	if (histo) {
-		printHistogram(freq);
+		for (int i = 0; i < 256; i++) {
+			if (freq[i]) {
+				if (i == 10) {
+					printf("NL : %u\n", freq[i]);
+				}
+				else if (i == 13) {
+					printf("CR : %u\n", freq[i]);
+				}
+				else if (i == 32) {
+					printf("Space : %u\n", freq[i]);
+				}
+				else {
+					printf("%c : %u\n", i, freq[i]);
+				}
+			}
+		}
 	}
 	/**********************Push characters to priority queue**********************/
 	Heap *pq = newHeap();
