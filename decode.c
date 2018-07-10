@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
 	/**********************Open Files**********************/
 	int c;
 	FILE *in = NULL, *out = NULL;
-	uint8_t verbose = 0, tree = 0;
+	uint8_t tree = 0;
 	char fileOutName[256];
 	memset(fileOutName, 0, sizeof(char) << 8);
 	while ((c = getopt(argc, argv, "tvi:o:")) != -1) {
@@ -31,10 +31,6 @@ int main(int argc, char **argv) {
 					puts("Error: Cannot open input file");
 					exit(-1);
 				}
-				break;
-			}
-			case 'v': {
-				verbose = 1;
 				break;
 			}
 			case 't' : {
