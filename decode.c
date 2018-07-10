@@ -130,6 +130,7 @@ int main(int argc, char **argv) {
 		fclose(out);
 	}
 	printf("Decoded file saved as \"%s\"\n", fileOutName);
-	freeStack(s);
+	freeBTree(s->top);
+	free(s);
 	return 0;
 }
