@@ -103,6 +103,18 @@ int main(int argc, char **argv) {
 	bVInit(&d);
 	uint32_t leaves = 0;
 	getHuffmanCodes(pq->parent, d, codes, &leaves);
+	if (!pq || (pq && !pq->parent) || !pq->parent->val) {
+		puts("Input file is empty. Exiting");
+		if (in) {
+		fclose(in);
+		}
+		if (out) {
+			fclose(out);
+		}
+		freeBTree(pq->parent);
+		free(pq);
+		exit(0);
+	}
 	if (pCodes) {
 		printCodes(codes);
 	}
