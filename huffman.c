@@ -151,7 +151,7 @@ void getHuffmanCodes(Node *n, Bitvector c, Bitvector *b, uint32_t *leaves) {
 		// Is a leaf, save code
 		else {
 			*leaves += 1;
-			/* Save current bit path to codes array */
+			/* Save current bit path c to codes array b */
 			forEachBit(&c, b, n, pushBit);
 		}
 	}

@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
 	int c;
 	uint8_t verbose = 0, tree = 0, histo = 0, pCodes = 0;
 	char fileOutName[256];
-	memset(fileOutName, 0, sizeof(char) << 8);
+	memset(fileOutName, 0, 256);
 	FILE *in = NULL, *out = NULL;
 	while ((c = getopt(argc, argv, "i:o:vthc")) != -1) {
 		switch(c) {
@@ -99,8 +99,8 @@ int main(int argc, char **argv) {
 		printTree(pq->parent, 0);
 	}
 	/**********************Get Huffman Codes**********************/
-	Bitvector codes[255]; // 255 for each ascii char
-	for (uint8_t i = 0; i < 255; i++) {
+	Bitvector codes[256];
+	for (int i = 0; i < 256; i++) {
 		bVInit(&codes[i]);
 	}
 	Bitvector d;
@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
 	if (!pq || (pq && !pq->parent) || !pq->parent->val) {
 		puts("Input file is empty. Exiting");
 		if (in) {
-		fclose(in);
+			fclose(in);
 		}
 		if (out) {
 			fclose(out);
@@ -177,8 +177,8 @@ int main(int argc, char **argv) {
 	if (out) {
 		fclose(out);
 	}
-	printf("Encoded file saved as \"%s\"\n", fileOutName);
 	freeBTree(pq->parent);
 	free(pq);
+	printf("Encoded file saved as \"%s\"\n", fileOutName);
 	return 0;
 }
