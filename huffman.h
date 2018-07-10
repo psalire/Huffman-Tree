@@ -12,7 +12,7 @@ typedef struct bitvector {
 } Bitvector;
 
 void bVInit(Bitvector *);
-void pushBit(void *x, void *y);
+void pushBit(void *, void *);
 void popBit(Bitvector *);
 uint8_t getBit(Bitvector *, uint32_t);
 void print(void *, void *);
