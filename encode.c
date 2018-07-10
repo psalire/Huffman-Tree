@@ -62,6 +62,7 @@ int main(int argc, char **argv) {
 	while (fread(&buf, 1, 1, in)) {
 		freq[buf]++;
 	}
+	/* Print histogram */
 	if (histo) {
 		for (int i = 0; i < 256; i++) {
 			if (freq[i]) {
@@ -74,6 +75,9 @@ int main(int argc, char **argv) {
 				else if (i == 32) {
 					printf("Space : %u\n", freq[i]);
 				}
+				else if (i > 126) {
+					printf("%u : %u\n", i, freq[i]);
+				}
 				else {
 					printf("%c : %u\n", i, freq[i]);
 				}
@@ -82,7 +86,7 @@ int main(int argc, char **argv) {
 	}
 	/**********************Push characters to priority queue**********************/
 	Heap *pq = newHeap();
-	for (uint32_t i = 0; i < 255; i++) {
+	for (uint32_t i = 0; i < 256; i++) {
 		if (freq[i]) {
 			push(pq, newElem(freq[i], pq->size, (uint8_t) i));
 		}

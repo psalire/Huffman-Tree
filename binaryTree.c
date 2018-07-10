@@ -132,6 +132,9 @@ void freeBTree(Node *r) {
 	}
 }
 void printNode(Node *e) {
+	if (e->symbol < 32 || e->symbol > 126) {
+		printf("(%lu, %u)\n", e->val, e->symbol);
+	}
 	switch(e->symbol) {
 		case ' ': {
 			printf("(%lu, SPACE)\n", e->val);
