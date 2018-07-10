@@ -1,4 +1,4 @@
-#### A standard Huffman Tree Encoder and Decoder
+### A standard Huffman Tree Encoder and Decoder
 
 Encoder - builds Huffman tree based on character frequency, writes filesize, tree, and encoded bytes to file
 
