@@ -7,6 +7,39 @@
 #include "binaryTree.h"
 #include "huffman.h"
 
+static void closeAndFree(FILE *in, FILE *out, Heap *h) {
+	if (in) {
+		fclose(in);
+	}
+	if (out) {
+		fclose(out);
+	}
+	freeBTree(h->parent);
+	free(h);
+}
+
+static void printHistogram(uint32_t freq[256]) {
+	for (int i = 0; i < 256; i++) {
+		if (freq[i]) {
+			if (i == 10) {
+				printf("NL : %u\n", freq[i]);
+			}
+			else if (i == 13) {
+				printf("CR : %u\n", freq[i]);
+			}
+			else if (i == 32) {
+				printf("Space : %u\n", freq[i]);
+			}
+			else if (i > 126) {
+				printf("%u : %u\n", i, freq[i]);
+			}
+			else {
+				printf("%c : %u\n", i, freq[i]);
+			}
+		}
+	}
+}
+
 int main(int argc, char **argv) {
 	/**********************Open Files**********************/
 	int c;
@@ -34,19 +67,19 @@ int main(int argc, char **argv) {
 				break;
 			}
 			case 'v': {
-				verbose = 1;
+				verbose = 1; // Print file size information
 				break;
 			}
 			case 't': {
-				tree = 1;
+				tree = 1; // Print tree
 				break;
 			}
 			case 'h': {
-				histo = 1;
+				histo = 1; // Print character frequencies
 				break;
 			}
 			case 'c': {
-				pCodes = 1;
+				pCodes = 1; // Print Huffman codes
 				break;
 			}
 		}
@@ -58,31 +91,12 @@ int main(int argc, char **argv) {
 	/**********************Get Character Frequencies**********************/
 	uint8_t buf;
 	uint32_t freq[256];
-	memset(freq, 0, 1020);
+	memset(freq, 0, 1024);
 	while (fread(&buf, 1, 1, in)) {
 		freq[buf]++;
 	}
-	/* Print histogram */
 	if (histo) {
-		for (int i = 0; i < 256; i++) {
-			if (freq[i]) {
-				if (i == 10) {
-					printf("NL : %u\n", freq[i]);
-				}
-				else if (i == 13) {
-					printf("CR : %u\n", freq[i]);
-				}
-				else if (i == 32) {
-					printf("Space : %u\n", freq[i]);
-				}
-				else if (i > 126) {
-					printf("%u : %u\n", i, freq[i]);
-				}
-				else {
-					printf("%c : %u\n", i, freq[i]);
-				}
-			}
-		}
+		printHistogram(freq);
 	}
 	/**********************Push characters to priority queue**********************/
 	Heap *pq = newHeap();
@@ -99,24 +113,16 @@ int main(int argc, char **argv) {
 		printTree(pq->parent, 0);
 	}
 	/**********************Get Huffman Codes**********************/
-	Bitvector codes[256];
+	Bitvector codes[256], d;
 	for (int i = 0; i < 256; i++) {
 		bVInit(&codes[i]);
 	}
-	Bitvector d;
 	bVInit(&d);
 	uint32_t leaves = 0;
 	getHuffmanCodes(pq->parent, d, codes, &leaves);
 	if (!pq || (pq && !pq->parent) || !pq->parent->val) {
 		puts("Input file is empty. Exiting");
-		if (in) {
-			fclose(in);
-		}
-		if (out) {
-			fclose(out);
-		}
-		freeBTree(pq->parent);
-		free(pq);
+		closeAndFree(in, out, pq);
 		exit(0);
 	}
 	if (pCodes) {
@@ -142,7 +148,7 @@ int main(int argc, char **argv) {
 		exit(-1);
 	}
 	newSize += 8;
-	/* Write char codes */
+	/* Write char codes; get each byte and write corresponing code using bitvector */
 	while (fread(&buf, 1, 1, in)) {
 		for (uint32_t i = 0; i < (codes[buf].len << 3) + codes[buf].curr; i++) {
 			uint8_t bit = getBit(&codes[buf], i);
@@ -171,14 +177,7 @@ int main(int argc, char **argv) {
 		printf("Leaf count: %u\n", leaves);
 	}
 	/**********************Close And Free**********************/
-	if (in) {
-		fclose(in);
-	}
-	if (out) {
-		fclose(out);
-	}
-	freeBTree(pq->parent);
-	free(pq);
+	closeAndFree(in, out, pq);
 	printf("Encoded file saved as \"%s\"\n", fileOutName);
 	return 0;
 }
