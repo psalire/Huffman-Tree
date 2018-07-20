@@ -6,6 +6,10 @@
 #include "minheap.h"
 #include "binaryTree.h"
 #include "huffman.h"
+#define VERBOSE_MASK 0x1
+#define CODES_MASK 0x2
+#define TREE_MASK 0x4
+#define HISTOGRAM_MASK 0x8
 
 static void closeAndFree(FILE *in, FILE *out, Heap *h) {
 	if (in) {
@@ -43,7 +47,7 @@ static void printHistogram(uint32_t freq[256]) {
 int main(int argc, char **argv) {
 	/**********************Open Files**********************/
 	int c;
-	uint8_t verbose = 0, tree = 0, histo = 0, pCodes = 0;
+	uint8_t masks = 0x0;
 	char fileOutName[256];
 	memset(fileOutName, 0, 256);
 	FILE *in = NULL, *out = NULL;
@@ -67,19 +71,19 @@ int main(int argc, char **argv) {
 				break;
 			}
 			case 'v': {
-				verbose = 1; // Print file size information
+				masks |= VERBOSE_MASK; // Print file size information
 				break;
 			}
 			case 't': {
-				tree = 1; // Print tree
+				masks |= TREE_MASK; // Print tree
 				break;
 			}
 			case 'h': {
-				histo = 1; // Print character frequencies
+				masks |= HISTOGRAM_MASK; // Print character frequencies
 				break;
 			}
 			case 'c': {
-				pCodes = 1; // Print Huffman codes
+				masks |= CODES_MASK; // Print Huffman codes
 				break;
 			}
 		}
@@ -95,7 +99,7 @@ int main(int argc, char **argv) {
 	while (fread(&buf, 1, 1, in)) {
 		freq[buf]++;
 	}
-	if (histo) {
+	if (masks & HISTOGRAM_MASK) {
 		printHistogram(freq);
 	}
 	/**********************Push characters to priority queue**********************/
@@ -109,7 +113,7 @@ int main(int argc, char **argv) {
 	for (uint32_t i = 0; pq->size > 1; i++) {
 		push(pq, join(pop(pq), pop(pq)));
 	}
-	if (tree) {
+	if (masks & TREE_MASK) {
 		printTree(pq->parent, 0);
 	}
 	/**********************Get Huffman Codes**********************/
@@ -125,7 +129,7 @@ int main(int argc, char **argv) {
 		closeAndFree(in, out, pq);
 		exit(0);
 	}
-	if (pCodes) {
+	if (masks & CODES_MASK) {
 		printCodes(codes);
 	}
 	/**********************Write Compressed File**********************/
@@ -171,7 +175,7 @@ int main(int argc, char **argv) {
 		}
 		newSize += toFile.len + 1;
 	}
-	if (verbose) {
+	if (masks & VERBOSE_MASK) {
 		printf("Initial file size : %lu bytes\n", pq->parent->val);
 		printf("New file size : %u bytes\n", newSize);
 		printf("Leaf count: %u\n", leaves);

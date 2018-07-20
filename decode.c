@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
 	uint8_t tree = 0;
 	char fileOutName[256];
 	memset(fileOutName, 0, sizeof(char) << 8);
-	while ((c = getopt(argc, argv, "tvi:o:")) != -1) {
+	while ((c = getopt(argc, argv, "ti:o:")) != -1) {
 		switch(c) {
 			case 'i': {
 				in = fopen(optarg, "r");
