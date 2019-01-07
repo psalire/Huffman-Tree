@@ -6,13 +6,13 @@
 
 typedef struct node Node;
 struct node { // node for both BT and LL
-	uint64_t val;
-	uint32_t index;
-	uint8_t symbol;
-	Node *left, *right, *next;
+    uint64_t val;
+    uint32_t index;
+    uint8_t symbol;
+    Node *left, *right, *next;
 };
 typedef struct BTree {
-	Node *root;
+    Node *root;
 } BTree;
 
 BTree *newBTree();

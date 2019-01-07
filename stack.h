@@ -6,7 +6,7 @@
 
 /* Elem and function in minheap.h */
 typedef struct Stack {
-	Elem *top;
+    Elem *top;
 } Stack;
 
 Stack *stackInit();

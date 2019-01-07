@@ -7,8 +7,8 @@
 #define MAGIC_NUMBER 0xd0d0d00d
 
 typedef struct bitvector {
-	uint8_t bV[256], curr;
-	uint32_t len;
+    uint8_t bV[256], curr;
+    uint32_t len;
 } Bitvector;
 
 void bVInit(Bitvector *);

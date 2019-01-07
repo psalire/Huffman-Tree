@@ -8,8 +8,8 @@
 /* Employ binaryTree as singly linked-list min heap to make priority queue */
 typedef Node Elem;
 typedef struct Heap {
-	Elem *parent, *end;
-	uint32_t size;
+    Elem *parent, *end;
+    uint32_t size;
 } Heap;
 
 Heap *newHeap();
