@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
 		}
 	}
 	if (!(in && out)) {
-		puts("Error: define input file with -i output file with -o");
+		puts("Usage: decode -i [input_file] -o [output_file]");
 		exit(-1);
 	}
 	/**********************Read File**********************/
