@@ -24,7 +24,7 @@ On a Linux machine:
 
 #### How it works
 
-Huffman trees are used as a type of lossless data compression. It works by encoding the most frequent occurring bytes in a file to smaller sizes e.g. to a few bits. For example, if the most frequent occurring byte in a file is 'e', which is 101 in ASCII or 01100101 in binary, this may be encoded to fewer bits e.g. 001 - here, letter 'e' only takes 3 bits per occurrence rather than 8 bits.
+Huffman trees are used as a type of lossless data compression. It works by encoding the most frequent occurring bytes in a file to smaller sizes e.g. to a few bits. For example, if the most frequent occurring byte in a file is 'e', which is 101 in ASCII or `01100101` in binary, this may be encoded to fewer bits e.g. `001` - here, letter 'e' only takes 3 bits per occurrence rather than 8 bits, saving 5 bits per letter 'e'.
 
 ##### encode.c
 
