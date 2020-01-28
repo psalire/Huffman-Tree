@@ -25,6 +25,7 @@ On a Linux machine:
     * ```-h``` Print character frequencies
     * ```-c``` Print Huffman codes
 3. Decompress a file with ```./decode -i [input file] -o [output name]```
+    * ```-t``` Print Huffman Tree
 
 ### How it works
 
