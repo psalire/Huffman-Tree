@@ -28,7 +28,7 @@ Huffman trees are used as a type of lossless data compression. It works by encod
 
 #### encode.c
 
-Building the Huffman tree:
+##### Building the Huffman tree:
 
 1. Read file and build table of each character occurrence.
 2. Push all characters mapped to occurence to a max priority queue.
@@ -37,7 +37,7 @@ Building the Huffman tree:
 5. Huffman tree is constructed i.e. the last node in the priority queue. The highest occurring characters are near the top of the tree.
 6. Do a tree traversal of the Huffman tree to get the encoded values of each occurring character. I.e. if traversing to the left child, record '0', if traversing to the right child, record '1'. For example, if the path to the letter 'E' is left, left, right, then the encoded value for it is '001'- 3 bits long. Save this in a table.
 
-Writing the encoded file:
+##### Writing the encoded file:
 
 7. Write ```0xd0d0d00d``` to the output file. This is used to identify that it was written by this program when decoding.
 8. Write the Huffman tree to the output file represented as a string and the filesize of the input file. These are used when decoding.
