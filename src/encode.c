@@ -90,6 +90,11 @@ int main(int argc, char **argv) {
 	}
 	if (!(in && out)) {
 		puts("Usage: encode -i [input_file] -o [output_file]");
+        puts("Optional:");
+        puts("-v verbose");
+        puts("-t Print Huffman tree");
+        puts("-h Print character frequencies");
+        puts("-c Print Huffman codes");
 		exit(-1);
 	}
 	/**********************Get Character Frequencies**********************/
