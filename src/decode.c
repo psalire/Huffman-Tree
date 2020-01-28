@@ -41,6 +41,8 @@ int main(int argc, char **argv) {
 	}
 	if (!(in && out)) {
 		puts("Usage: decode -i [input_file] -o [output_file]");
+        puts("Optional:");
+        puts("-t Print Huffman Tree");
 		exit(-1);
 	}
 	/**********************Read File**********************/
