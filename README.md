@@ -20,10 +20,10 @@
 On a Linux machine:
 1. Run ```make```
 2. Compress a file with ```./encode -i [input file] -o [output name]```
-    * -v verbose
-    * -t Print Huffman Tree
-    * -h Print character frequencies
-    * -c Print Huffman codes
+    * ```-v``` verbose
+    * ```-t``` Print Huffman Tree
+    * ```-h``` Print character frequencies
+    * ```-c``` Print Huffman codes
 3. Decompress a file with ```./decode -i [input file] -o [output name]```
 
 ### How it works
