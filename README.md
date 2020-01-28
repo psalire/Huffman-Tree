@@ -1,8 +1,8 @@
 # Huffman Tree Encoding and Decoding
 
-### File compression and Decompression
+## File compression and Decompression
 
-#### Files
+### Files
 
 * src/
     * encode.c - Encoder/compressor
@@ -15,18 +15,18 @@
 * bin/
     * .o files
 
-#### How to use
+### How to use
 
 On a Linux machine:
 1. Run ```make```
 2. Compress a file with ```./encode -i [input file] -o [output name]```
 3. Decompress a file with ```./decode -i [input file] -o [output name]```
 
-#### How it works
+### How it works
 
 Huffman trees are used as a type of lossless data compression. It works by encoding the most frequent occurring bytes in a file to smaller sizes e.g. to a few bits. For example, if the most frequent occurring byte in a file is 'e', which is 101 in ASCII or `01100101` in binary, this may be encoded to fewer bits e.g. `001` - here, letter 'e' only takes 3 bits per occurrence rather than 8 bits, saving 5 bits per letter 'e'.
 
-##### encode.c
+#### encode.c
 
 Building the Huffman tree:
 1. Read file and build table of each character occurrence.
@@ -42,7 +42,7 @@ Writing the encoded file:
 9. Read a byte in the input file and use the table from 6. to write the encoded value to the output file. Use a bitvector to write individual bits.
 10. Repeat 9. until end of the input file.
 
-##### decode.c
+#### decode.c
 
 1. Read the input file. Check if ```0xd0d0d00d``` occurs at the beginning to determine if this file was written by ```encode.c```
 2. Reconstruct the Huffman tree from the string representation in the file.
