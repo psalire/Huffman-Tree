@@ -7,6 +7,7 @@
 * src/
     * encode.c - Encoder/compressor
     * decode.c - Decoder/decompressor
+    * huffman.c - Huffman algorithms and bitvector implementation
     * binaryTree.c - Binary tree implementation
     * minheap.c - Min-heap implementation
     * stack.c - Stack implementation
